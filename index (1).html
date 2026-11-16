@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Accordeur">
+<meta name="theme-color" content="#14110f">
+<title>Accordeur</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<style>
+:root{
+  --bg:#14110f; --surface:#1f1a17; --surface2:#2a231f; --line:#3a312b;
+  --text:#f3ece4; --muted:#a3968a; --accent:#f2a541; --ok:#5fd38d; --warn:#f2c14e; --bad:#ff6b5b;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font-family:ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-user-select:none;user-select:none;overscroll-behavior:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.app{max-width:480px;margin:0 auto;min-height:100svh;display:flex;flex-direction:column;gap:14px;
+  padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 18px)}
+header{display:flex;gap:10px;align-items:stretch}
+.tuning-btn{flex:1;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;position:relative}
+.tuning-btn .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tuning-btn .nm{font-size:17px;font-weight:700}
+.tuning-btn .notes{font-size:13px;color:var(--muted)}
+.tuning-btn::after{content:"▾";position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.icon-btn{width:56px;background:var(--surface);border:1px solid var(--line);border-radius:16px;display:grid;place-items:center}
+.icon-btn svg{width:24px;height:24px}
+
+.display{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:14px 14px 18px;display:flex;flex-direction:column;align-items:center;transition:opacity .3s}
+.seg{display:flex;background:var(--bg);border-radius:12px;padding:3px;gap:3px;align-self:center}
+.seg button{padding:6px 14px;border-radius:9px;font-size:14px;color:var(--muted);font-weight:600}
+.seg button.on{background:var(--surface2);color:var(--text)}
+.note-wrap{display:flex;align-items:flex-start;margin-top:6px;height:96px}
+.note{font-size:84px;font-weight:800;line-height:1;letter-spacing:-.02em;transition:color .2s}
+.oct{font-size:22px;color:var(--muted);margin-top:8px;margin-left:2px}
+.freq{font-size:14px;color:var(--muted);height:18px;font-variant-numeric:tabular-nums}
+#meter{width:100%;height:210px;margin-top:10px;display:block}
+.status{font-size:15px;color:var(--muted);height:20px;margin-top:8px;text-align:center}
+.ok-c{color:var(--ok)} .warn-c{color:var(--warn)} .bad-c{color:var(--bad)}
+
+.mic-btn{background:var(--accent);color:#1b130b;font-weight:800;font-size:17px;border-radius:16px;padding:15px;display:flex;align-items:center;justify-content:center;gap:10px}
+.mic-btn.on{background:var(--surface);color:var(--text);border:1px solid var(--line);font-weight:600}
+.mic-btn .dot{width:10px;height:10px;border-radius:50%;background:var(--bad);display:none;animation:pulse 1.4s infinite}
+.mic-btn.on .dot{display:block}
+@keyframes pulse{50%{opacity:.3}}
+.mic-msg{font-size:13px;color:var(--warn);text-align:center;line-height:1.4;display:none}
+.mic-msg.show{display:block}
+
+.strings{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.str{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 0 8px;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;transition:border-color .15s,background .15s}
+.str .sn{font-size:19px;font-weight:800}
+.str .so{font-size:11px;color:var(--muted)}
+.str.active{border-color:var(--accent);background:var(--surface2)}
+.str.ok::after{content:"✓";position:absolute;top:3px;right:6px;font-size:11px;color:var(--ok);font-weight:800}
+.str:active{transform:scale(.96)}
+.hint{font-size:12.5px;color:var(--muted);text-align:center;line-height:1.45;padding:0 6px}
+.edit-btn{border:1px dashed var(--line);border-radius:14px;padding:12px;color:var(--text);font-weight:600;font-size:15px}
+
+/* sheet */
+.sheet{position:fixed;inset:0;z-index:10;display:flex;align-items:flex-end;justify-content:center}
+.sheet.hidden{display:none}
+.sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.sheet-panel{position:relative;width:100%;max-width:480px;max-height:86svh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;border:1px solid var(--line);border-bottom:0;
+  padding:14px 16px calc(env(safe-area-inset-bottom) + 18px);animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.sheet-head h2{font-size:18px;margin:0}
+.sheet-head .close{width:34px;height:34px;border-radius:50%;background:var(--surface2);font-size:15px}
+.group-t{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 2px 6px}
+.list-item{display:flex;align-items:center;gap:8px;width:100%;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-bottom:6px;text-align:left}
+.list-item.cur{border-color:var(--accent)}
+.list-item .t{flex:1;display:flex;flex-direction:column;gap:2px}
+.list-item .t b{font-size:15px}
+.list-item .t span{font-size:13px;color:var(--muted)}
+.del{width:32px;height:32px;border-radius:10px;background:var(--surface2);color:var(--bad);flex:none}
+.erow{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:8px 10px;margin-bottom:6px}
+.erow .lab{width:62px;font-size:12px;color:var(--muted);line-height:1.2}
+.erow .lab b{display:block;color:var(--text);font-size:14px}
+.step{width:40px;height:40px;border-radius:12px;background:var(--surface2);font-size:22px;font-weight:700;flex:none}
+.erow .val{flex:1;text-align:center}
+.erow .val b{font-size:20px}
+.erow .val span{display:block;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.play{width:40px;height:40px;border-radius:12px;background:var(--surface2);color:var(--accent);flex:none;font-size:15px}
+.row{display:flex;gap:8px;margin-top:10px}
+.inp{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--text);font:inherit;font-size:16px;-webkit-user-select:text;user-select:text}
+.btn{flex:none;background:var(--accent);color:#1b130b;font-weight:800;border-radius:12px;padding:12px 16px}
+.btn2{background:var(--surface2);border-radius:12px;padding:12px 14px;font-weight:600}
+.note-s{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.4}
+.set{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:6px}
+.set .k{font-size:15px}
+.set .k span{display:block;font-size:12px;color:var(--muted)}
+.stepper{display:flex;align-items:center;gap:8px}
+.stepper b{min-width:64px;text-align:center;font-variant-numeric:tabular-nums}
+.toggle{width:52px;height:32px;border-radius:16px;background:var(--surface2);position:relative;flex:none;transition:background .2s}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:var(--text);transition:transform .2s}
+.toggle.on{background:var(--ok)}
+.toggle.on::after{transform:translateX(20px)}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 24px);transform:translateX(-50%);background:var(--surface2);border:1px solid var(--line);padding:10px 16px;border-radius:12px;font-size:14px;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <button id="tuningBtn" class="tuning-btn" aria-label="Choisir l'accordage">
+      <span class="lbl">Accordage</span>
+      <span class="nm" id="tuningName">Standard</span>
+      <span class="notes" id="tuningNotes"></span>
+    </button>
+    <button id="settingsBtn" class="icon-btn" aria-label="Réglages">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+    </button>
+  </header>
+
+  <section class="display idle" id="display">
+    <div class="seg" id="seg">
+      <button data-m="auto" class="on">Auto</button>
+      <button data-m="manual">Corde fixe</button>
+    </div>
+    <div class="note-wrap"><span class="note" id="noteName">–</span><span class="oct" id="noteOct"></span></div>
+    <div class="freq" id="freq"></div>
+    <canvas id="meter" aria-hidden="true"></canvas>
+    <div class="status" id="status">Active le micro et joue une corde</div>
+  </section>
+
+  <button class="mic-btn" id="micBtn"><span class="dot"></span><span id="micLbl">Activer le micro</span></button>
+  <div class="mic-msg" id="micMsg"></div>
+
+  <section class="strings" id="strings"></section>
+  <div class="hint">Touche une corde pour entendre sa note et la verrouiller. « Auto » reconnaît la corde que tu joues.</div>
+  <button class="edit-btn" id="editBtn">✎ Modifier l'accordage corde par corde</button>
+</div>
+
+<div class="sheet hidden" id="sheet">
+  <div class="sheet-bg" id="sheetBg"></div>
+  <div class="sheet-panel">
+    <div class="sheet-head"><h2 id="sheetTitle"></h2><button class="close" id="sheetClose" aria-label="Fermer">✕</button></div>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+"use strict";
+const NOTES_EN=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+const NOTES_FR=['Do','Do♯','Ré','Ré♯','Mi','Fa','Fa♯','Sol','Sol♯','La','La♯','Si'];
+const PRESETS=[
+  {id:'standard',name:'Standard',strings:[40,45,50,55,59,64]},
+  {id:'dropd',name:'Drop D',strings:[38,45,50,55,59,64]},
+  {id:'halfdown',name:'½ ton plus bas',strings:[39,44,49,54,58,63]},
+  {id:'fulldown',name:'1 ton plus bas',strings:[38,43,48,53,57,62]},
+  {id:'dropc',name:'Drop C',strings:[36,43,48,53,57,62]},
+  {id:'dadgad',name:'DADGAD',strings:[38,45,50,55,57,62]},
+  {id:'openg',name:'Open G',strings:[38,43,50,55,59,62]},
+  {id:'opend',name:'Open D',strings:[38,45,50,54,57,62]},
+  {id:'opene',name:'Open E',strings:[40,47,52,56,59,64]},
+  {id:'openc',name:'Open C',strings:[36,43,48,55,60,64]},
+];
+const MIN_M=28, MAX_M=76; // E1 .. E5
+const STORE='accordeur-v1';
+let S={tuningId:'standard',name:'Standard',strings:[40,45,50,55,59,64],a4:440,notation:'en',refSound:true,custom:[]};
+try{const s=JSON.parse(localStorage.getItem(STORE)||'null');
+  if(s&&Array.isArray(s.strings)&&s.strings.length===6) S=Object.assign(S,s);}catch(e){}
+const save=()=>{try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}};
+
+const $=id=>document.getElementById(id);
+const noteName=m=>(S.notation==='fr'?NOTES_FR:NOTES_EN)[((m%12)+12)%12];
+const octave=m=>Math.floor(m/12)-1;
+const m2f=m=>S.a4*Math.pow(2,(m-69)/12);
+const f2m=f=>69+12*Math.log2(f/S.a4);
+const tuningNotes=a=>a.map(noteName).join(' ');
+
+/* ---------- state ---------- */
+let mode='auto', locked=null, activeIdx=null;
+let ctx=null, analyser=null, stream=null, buf=null, nsdf=null, raf=0, running=false;
+let lastSig=0, muteUntil=0, stable=0, wakeLock=null;
+const tuned=new Set();
+
+/* ---------- live meter: centre line + moving dot + trail ---------- */
+const cv=$('meter'), g2=cv.getContext('2d');
+const TRACE_N=110;
+let dispC=0, targetC=null, trace=[];
+function sizeMeter(){const r=cv.getBoundingClientRect(), d=window.devicePixelRatio||1; cv.width=Math.round(r.width*d); cv.height=Math.round(r.height*d); drawMeter();}
+const colFor=a=>a<=5?'#5fd38d':a<=15?'#f2c14e':'#ff6b5b';
+function drawMeter(){
+  const d=window.devicePixelRatio||1, W=cv.width/d, H=cv.height/d; if(!W) return;
+  g2.setTransform(d,0,0,d,0,0); g2.clearRect(0,0,W,H);
+  const pad=24, cx=W/2, span=W/2-pad, top=26;
+  const X=c=>cx+Math.max(-1.08,Math.min(1.08,c/50))*span;
+  // green zone ±5 cents
+  g2.fillStyle='rgba(95,211,141,.10)'; g2.fillRect(X(-5),0,X(5)-X(-5),H);
+  // scale
+  g2.textAlign='center'; g2.font='600 11px ui-rounded,system-ui,sans-serif';
+  for(let c=-50;c<=50;c+=5){
+    if(c===0) continue;
+    const big=c%25===0; g2.strokeStyle=big?'#6b5d52':'#3f362f'; g2.lineWidth=big?2:1.5;
+    g2.beginPath(); g2.moveTo(X(c),top+24); g2.lineTo(X(c),top+(big?40:32)); g2.stroke();
+    if(big){g2.fillStyle='#a3968a'; g2.fillText((c>0?'+':'−')+Math.abs(c),X(c),top+54);}
+  }
+  // centre line
+  g2.strokeStyle='rgba(243,236,228,.7)'; g2.lineWidth=2;
+  g2.beginPath(); g2.moveTo(cx,0); g2.lineTo(cx,H); g2.stroke();
+  // trail (newest at the dot, older lower down)
+  const step=(H-top)/TRACE_N; g2.lineCap='round'; g2.lineWidth=3;
+  for(let i=trace.length-1;i>0;i--){
+    const a=trace[i], b=trace[i-1]; if(a===null||b===null) continue;
+    const age=trace.length-1-i, y1=top+age*step, y2=y1+step;
+    g2.globalAlpha=Math.max(0,0.85-age/TRACE_N);
+    g2.strokeStyle=colFor(Math.abs(a));
+    g2.beginPath(); g2.moveTo(X(a),y1); g2.lineTo(X(b),y2); g2.stroke();
+  }
+  g2.globalAlpha=1;
+  if(targetC===null){
+    g2.fillStyle='#3a312b'; g2.beginPath(); g2.arc(cx,top,9,0,Math.PI*2); g2.fill();
+    return;
+  }
+  const r=Math.round(dispC), col=colFor(Math.abs(dispC)), dx=X(dispC);
+  // bar from centre to dot
+  g2.strokeStyle=col; g2.lineWidth=5;
+  g2.beginPath(); g2.moveTo(cx,top); g2.lineTo(dx,top); g2.stroke();
+  // dot with the cents value
+  g2.fillStyle=col; g2.beginPath(); g2.arc(dx,top,19,0,Math.PI*2); g2.fill();
+  g2.fillStyle='#14110f'; g2.font='800 14px ui-rounded,system-ui,sans-serif'; g2.textBaseline='middle';
+  g2.fillText(r===0?'0':(r>0?'+':'−')+Math.abs(r),dx,top+1); g2.textBaseline='alphabetic';
+}
+window.addEventListener('resize',sizeMeter);
+
+/* ---------- UI render ---------- */
+function curTuningLabel(){
+  if(S.tuningId) return S.name;
+  return 'Perso (non enregistré)';
+}
+function renderHeader(){
+  $('tuningName').textContent=curTuningLabel();
+  $('tuningNotes').textContent=tuningNotes(S.strings)+(S.a4!==440?`  ·  La = ${S.a4} Hz`:'');
+}
+function renderStrings(){
+  const el=$('strings'); el.innerHTML='';
+  S.strings.forEach((m,i)=>{
+    const b=document.createElement('button');
+    b.className='str';
+    b.innerHTML=`<span class="sn">${noteName(m)}</span><span class="so">${6-i}</span>`;
+    b.addEventListener('click',()=>onString(i));
+    el.appendChild(b);
+  });
+  updateStringClasses();
+}
+function updateStringClasses(){
+  [...$('strings').children].forEach((b,i)=>{
+    b.classList.toggle('active',i===activeIdx);
+    b.classList.toggle('ok',tuned.has(i));
+  });
+}
+function setMode(m){
+  mode=m;
+  if(m==='auto'){locked=null;}
+  else if(locked===null){locked=activeIdx??0; activeIdx=locked;}
+  [...$('seg').children].forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+  resetTrack(); updateStringClasses();
+  if(m==='manual') showTarget(locked);
+}
+function showTarget(i){
+  const m=S.strings[i];
+  $('noteName').textContent=noteName(m); $('noteOct').textContent=octave(m);
+  $('noteName').className='note';
+  $('freq').textContent=`Cible ${m2f(m).toFixed(1)} Hz`;
+}
+function resetAll(){tuned.clear(); resetTrack(); if(locked!==null&&locked>5) locked=null; renderHeader(); renderStrings(); if(mode==='manual'&&locked!==null) showTarget(locked);}
+
+$('seg').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) setMode(b.dataset.m);});
+
+function onString(i){
+  locked=i; activeIdx=i; setMode('manual');
+  showTarget(i);
+  if(S.refSound) pluck(S.strings[i]);
+  if(!running){$('status').textContent=S.refSound?'Note de référence':'Corde verrouillée';}
+}
+
+/* ---------- reference sound (Karplus-Strong) ---------- */
+function ensureCtx(){
+  if(!ctx){const AC=window.AudioContext||window.webkitAudioContext; ctx=new AC();}
+  if(ctx.state==='suspended') ctx.resume();
+  return ctx;
+}
+function pluck(m){
+  try{
+    ensureCtx();
+    const f=m2f(m), sr=ctx.sampleRate, N=Math.floor(sr/f), f0=sr/(N+0.5);
+    const dur=2.6, len=Math.floor(sr*dur), b=ctx.createBuffer(1,len,sr), d=b.getChannelData(0);
+    let p=0; for(let i=0;i<N;i++){p=p*0.55+(Math.random()*2-1)*0.45; d[i]=p;}
+    const decay=Math.pow(0.08,1/(f0*2.2));
+    for(let i=N;i<len;i++){const a=d[i-N], c=i-N-1>=0?d[i-N-1]:0; d[i]=decay*0.5*(a+c);}
+    let mx=0; for(let i=0;i<len;i++) mx=Math.max(mx,Math.abs(d[i]));
+    const fade=Math.floor(sr*0.3);
+    for(let i=0;i<len;i++){let g=0.85/(mx||1); if(i>len-fade) g*=(len-i)/fade; d[i]*=g;}
+    const src=ctx.createBufferSource(); src.buffer=b; src.playbackRate.value=f/f0;
+    const g=ctx.createGain(); g.gain.value=0.9;
+    src.connect(g).connect(ctx.destination); src.start();
+    muteUntil=performance.now()+dur*1000*(f0/f)+150; idle();
+  }catch(e){}
+}
+
+/* ---------- pitch detection (McLeod / NSDF) ---------- */
+function detect(x,sr,cont){
+  const n=x.length;
+  let rms=0; for(let i=0;i<n;i++) rms+=x[i]*x[i];
+  rms=Math.sqrt(rms/n); if(rms<(cont?0.0012:0.0025)) return null;
+  const minLag=Math.floor(sr/1100), maxLag=Math.min(Math.floor(sr/55),n>>1);
+  for(let t=0;t<=maxLag+1;t++){
+    let ac=0, m=0;
+    for(let i=0,L=n-t;i<L;i++){const a=x[i],b=x[i+t]; ac+=a*b; m+=a*a+b*b;}
+    nsdf[t]=m>0?2*ac/m:0;
+  }
+  let t=1; while(t<maxLag&&nsdf[t]>0) t++;
+  const peaks=[]; let pm=-1, pv=-Infinity;
+  for(;t<maxLag;t++){
+    if(nsdf[t]>0){ if(nsdf[t]>pv){pv=nsdf[t];pm=t;} }
+    else if(pm>=0){peaks.push(pm);pm=-1;pv=-Infinity;}
+  }
+  if(pm>=0) peaks.push(pm);
+  if(!peaks.length) return null;
+  let best=0; for(const p of peaks) if(nsdf[p]>best) best=nsdf[p];
+  const th=0.9*best; let tau=-1;
+  for(const p of peaks){ if(p>=minLag&&nsdf[p]>=th){tau=p;break;} }
+  if(tau<1) return null;
+  if(nsdf[tau]<(cont?0.55:0.8)) return null;
+  const a=nsdf[tau-1], b=nsdf[tau], c=nsdf[tau+1], den=a-2*b+c;
+  const shift=den!==0?0.5*(a-c)/den:0;
+  return sr/(tau+shift);
+}
+
+function nearestString(f){
+  const m=f2m(f); let bi=0, bd=Infinity;
+  S.strings.forEach((s,i)=>{const d=Math.abs(m-s); if(d<bd){bd=d;bi=i;}});
+  return bi;
+}
+
+/* tracking: follows the note continuously while it rings */
+let trackF=0, pendF=0, pendN=0;
+function resetTrack(){trackF=0; pendF=0; pendN=0;}
+function accept(f,now){
+  if(trackF>0&&Math.abs(12*Math.log2(f/trackF))<=1){
+    trackF*=Math.pow(f/trackF,0.5);          // light smoothing, follows the peg live
+    pendF=0; pendN=0;
+  }else{                                       // new note: confirm on 3 frames
+    if(pendF&&Math.abs(12*Math.log2(f/pendF))<0.5){pendF=f; if(++pendN<3) return; trackF=f; pendF=0; pendN=0;}
+    else{pendF=f; pendN=1; return;}
+  }
+  lastSig=now; show(trackF);
+}
+
+function loop(){
+  raf=requestAnimationFrame(loop);
+  const now=performance.now();
+  if(now>=muteUntil){
+    analyser.getFloatTimeDomainData(buf);
+    const f=detect(buf,ctx.sampleRate,trackF>0);
+    if(f&&f>55&&f<1100) accept(f,now);
+    else if(now-lastSig>450) idle();
+  }
+  if(targetC!==null) dispC+=(targetC-dispC)*0.35;
+  trace.push(targetC===null?null:dispC); if(trace.length>TRACE_N) trace.shift();
+  drawMeter();
+}
+
+function show(f){
+  $('display').classList.remove('idle');
+  let idx;
+  if(mode==='manual'&&locked!==null) idx=locked;
+  else{
+    const n=nearestString(f), m=f2m(f);
+    idx=(activeIdx!==null&&n!==activeIdx&&Math.abs(m-S.strings[n])+0.3>=Math.abs(m-S.strings[activeIdx]))?activeIdx:n;
+  }
+  if(idx!==activeIdx) stable=0;
+  activeIdx=idx;
+  const target=S.strings[idx], tf=m2f(target), cents=1200*Math.log2(f/tf), ac=Math.abs(cents);
+  if(targetC===null) dispC=cents;
+  targetC=cents;
+  $('noteName').textContent=noteName(target); $('noteOct').textContent=octave(target);
+  $('freq').textContent=`${f.toFixed(1)} Hz · cible ${tf.toFixed(1)} Hz`;
+  $('noteName').className='note '+(ac<=5?'ok-c':ac<=15?'warn-c':'bad-c');
+  let st;
+  if(ac<=5) st='Accordée ✓';
+  else if(ac>80){const pm=Math.round(f2m(f)); st=`Tu joues un ${noteName(pm)}${octave(pm)} · ${cents<0?'serre':'desserre'}`;}
+  else st=cents<0?'Trop bas → serre la corde':'Trop haut → desserre la corde';
+  $('status').textContent=st;
+  if(ac<=4){ if(++stable>=15) tuned.add(idx);} else stable=0;
+  updateStringClasses();
+}
+function idle(){
+  resetTrack();
+  if(targetC===null) return;
+  targetC=null; stable=0;
+  $('display').classList.add('idle');
+  $('noteName').className='note';
+  $('status').textContent='Joue une corde';
+}
+
+/* ---------- mic ---------- */
+function micMsg(t){const m=$('micMsg'); m.textContent=t||''; m.classList.toggle('show',!!t);}
+async function startMic(){
+  micMsg('');
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    micMsg("Le micro n'est pas accessible sur cette page. Ouvre l'accordeur depuis son lien hébergé (https) pour la détection auto. Les notes de référence marchent quand même.");
+    return;
+  }
+  try{
+    ensureCtx();
+    stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+    await ctx.resume();
+    const src=ctx.createMediaStreamSource(stream);
+    analyser=ctx.createAnalyser(); analyser.fftSize=4096; src.connect(analyser);
+    buf=new Float32Array(analyser.fftSize); nsdf=new Float32Array(analyser.fftSize);
+    running=true; $('micBtn').classList.add('on'); $('micLbl').textContent='Micro activé · toucher pour couper';
+    $('status').textContent='Joue une corde';
+    try{ if('wakeLock' in navigator) wakeLock=await navigator.wakeLock.request('screen'); }catch(e){}
+    cancelAnimationFrame(raf); loop();
+  }catch(e){
+    const inFrame=(()=>{try{return window.self!==window.top}catch(_){return true}})();
+    micMsg(inFrame
+      ? "Le micro est bloqué dans cet aperçu. Ouvre l'accordeur depuis ton lien hébergé pour la détection auto ; les notes de référence marchent ici."
+      : "Accès au micro refusé. Sur iPhone : Réglages › Safari › Micro › Autoriser, puis recharge la page.");
+  }
+}
+function stopMic(){
+  running=false; cancelAnimationFrame(raf);
+  if(stream) stream.getTracks().forEach(t=>t.stop()); stream=null;
+  $('micBtn').classList.remove('on'); $('micLbl').textContent='Activer le micro';
+  idle(); trace=[]; drawMeter(); $('display').classList.add('idle'); $('status').textContent='Micro coupé';
+  try{wakeLock&&wakeLock.release();}catch(e){} wakeLock=null;
+}
+$('micBtn').addEventListener('click',()=>running?stopMic():startMic());
+document.addEventListener('visibilitychange',async()=>{
+  if(document.visibilityState==='visible'&&running){
+    try{ctx&&ctx.resume();}catch(e){}
+    try{ if('wakeLock' in navigator) wakeLock=await navigator.wakeLock.request('screen'); }catch(e){}
+  }
+});
+
+/* ---------- sheets ---------- */
+function openSheet(title,build){$('sheetTitle').textContent=title; const b=$('sheetBody'); b.innerHTML=''; build(b); $('sheet').classList.remove('hidden');}
+function closeSheet(){$('sheet').classList.add('hidden');}
+$('sheetBg').addEventListener('click',closeSheet); $('sheetClose').addEventListener('click',closeSheet);
+function toast(t){const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1600);}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function applyTuning(id,name,strings){S.tuningId=id; S.name=name; S.strings=[...strings]; save(); resetAll();}
+
+function tuningSheet(){
+  openSheet('Accordages',body=>{
+    const item=(id,name,strings,del)=>{
+      const b=document.createElement('button'); b.className='list-item'+(S.tuningId===id?' cur':'');
+      b.innerHTML=`<span class="t"><b>${esc(name)}</b><span>${tuningNotes(strings)}</span></span>`;
+      b.addEventListener('click',()=>{applyTuning(id,name,strings); closeSheet();});
+      if(del){const x=document.createElement('span'); x.className='del'; x.style.display='grid'; x.style.placeItems='center'; x.textContent='✕';
+        x.addEventListener('click',e=>{e.stopPropagation(); S.custom=S.custom.filter(c=>c.name!==name); if(S.tuningId===id) S.tuningId=null; save(); renderHeader(); tuningSheet(); toast('Supprimé');});
+        b.appendChild(x);}
+      return b;
+    };
+    if(S.custom.length){
+      const t=document.createElement('div'); t.className='group-t'; t.textContent='Mes accordages'; body.appendChild(t);
+      S.custom.forEach(c=>body.appendChild(item('c:'+c.name,c.name,c.strings,true)));
+    }
+    const t=document.createElement('div'); t.className='group-t'; t.textContent='Classiques'; body.appendChild(t);
+    PRESETS.forEach(p=>body.appendChild(item(p.id,p.name,p.strings,false)));
+    const e=document.createElement('button'); e.className='btn2'; e.style.width='100%'; e.style.marginTop='8px';
+    e.textContent='✎ Créer / modifier un accordage'; e.addEventListener('click',editSheet); body.appendChild(e);
+  });
+}
+
+function editSheet(){
+  openSheet("Modifier l'accordage",body=>{
+    const rows=document.createElement('div'); body.appendChild(rows);
+    const draw=()=>{
+      rows.innerHTML='';
+      for(let i=0;i<6;i++){
+        const m=S.strings[i], r=document.createElement('div'); r.className='erow';
+        r.innerHTML=`<span class="lab"><b>Corde ${6-i}</b>${i===0?'grave':i===5?'aiguë':''}</span>
+          <button class="step" data-d="-1">−</button>
+          <span class="val"><b>${noteName(m)}<small style="font-size:13px;color:var(--muted)">${octave(m)}</small></b><span>${m2f(m).toFixed(1)} Hz</span></span>
+          <button class="step" data-d="1">+</button>
+          <button class="play" aria-label="Écouter">▶</button>`;
+        r.querySelectorAll('.step').forEach(b=>b.addEventListener('click',()=>{
+          const nm=Math.max(MIN_M,Math.min(MAX_M,S.strings[i]+ +b.dataset.d));
+          if(nm===S.strings[i]) return;
+          S.strings[i]=nm; S.tuningId=null; save(); tuned.delete(i); renderHeader(); renderStrings();
+          if(mode==='manual'&&locked===i) showTarget(i);
+          draw(); if(S.refSound) pluck(nm);
+        }));
+        r.querySelector('.play').addEventListener('click',()=>pluck(S.strings[i]));
+        rows.appendChild(r);
+      }
+    };
+    draw();
+    const n=document.createElement('div'); n.className='note-s';
+    n.textContent='Chaque − / + décale la corde d’un demi-ton. Donne un nom pour garder cet accordage dans ta liste.';
+    body.appendChild(n);
+    const row=document.createElement('div'); row.className='row';
+    const inp=document.createElement('input'); inp.className='inp'; inp.placeholder='Nom (ex. Open Dsus4)'; inp.maxLength=30;
+    if(S.tuningId&&S.tuningId.startsWith('c:')) inp.value=S.name;
+    const sv=document.createElement('button'); sv.className='btn'; sv.textContent='Enregistrer';
+    sv.addEventListener('click',()=>{
+      const name=inp.value.trim(); if(!name){inp.focus(); toast('Donne un nom'); return;}
+      const ex=S.custom.find(c=>c.name===name);
+      if(ex) ex.strings=[...S.strings]; else S.custom.unshift({name,strings:[...S.strings]});
+      S.tuningId='c:'+name; S.name=name; save(); renderHeader(); toast('Accordage enregistré'); inp.blur();
+    });
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter') sv.click();});
+    row.append(inp,sv); body.appendChild(row);
+    const r2=document.createElement('div'); r2.className='row';
+    const std=document.createElement('button'); std.className='btn2'; std.style.flex='1'; std.textContent='Revenir en Standard';
+    std.addEventListener('click',()=>{applyTuning('standard','Standard',PRESETS[0].strings); draw(); inp.value='';});
+    r2.appendChild(std); body.appendChild(r2);
+  });
+}
+
+function settingsSheet(){
+  openSheet('Réglages',body=>{
+    const draw=()=>{
+      body.innerHTML=`
+      <div class="set"><span class="k">Diapason<span>Fréquence du La de référence</span></span>
+        <span class="stepper"><button class="step" id="a4m">−</button><b>${S.a4} Hz</b><button class="step" id="a4p">+</button></span></div>
+      <div class="set"><span class="k">Noms des notes</span>
+        <span class="seg" style="background:var(--surface)"><button data-n="en" class="${S.notation==='en'?'on':''}">E A D</button><button data-n="fr" class="${S.notation==='fr'?'on':''}">Mi La Ré</button></span></div>
+      <div class="set"><span class="k">Son de référence<span>Joue la note quand tu touches une corde</span></span>
+        <button class="toggle ${S.refSound?'on':''}" id="refT" aria-label="Son de référence"></button></div>
+      <div class="note-s">Astuce iPhone : dans Safari, bouton Partager › « Sur l’écran d’accueil » pour l’avoir comme une appli.</div>`;
+      const setA4=v=>{S.a4=Math.max(415,Math.min(466,v)); save(); renderHeader(); resetTrack(); draw();};
+      body.querySelector('#a4m').addEventListener('click',()=>setA4(S.a4-1));
+      body.querySelector('#a4p').addEventListener('click',()=>setA4(S.a4+1));
+      body.querySelectorAll('[data-n]').forEach(b=>b.addEventListener('click',()=>{S.notation=b.dataset.n; save(); renderHeader(); renderStrings(); if(mode==='manual'&&locked!==null) showTarget(locked); draw();}));
+      body.querySelector('#refT').addEventListener('click',()=>{S.refSound=!S.refSound; save(); draw();});
+    };
+    draw();
+  });
+}
+$('tuningBtn').addEventListener('click',tuningSheet);
+$('editBtn').addEventListener('click',editSheet);
+$('settingsBtn').addEventListener('click',settingsSheet);
+
+/* ---------- init ---------- */
+renderHeader(); renderStrings(); sizeMeter();
+})();
+</script>
+</body>
+</html>
