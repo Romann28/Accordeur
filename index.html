@@ -575,6 +575,18 @@ $('tuningBtn').addEventListener('click',tuningSheet);
 $('editBtn').addEventListener('click',editSheet);
 $('settingsBtn').addEventListener('click',settingsSheet);
 
+/* ---------- auto-update: compares with the online version, reloads if newer ---------- */
+const APP_VERSION='2026-11-20.2';
+async function checkUpdate(){
+  try{
+    const r=await fetch(location.pathname+'?check='+Date.now(),{cache:'no-store'}); if(!r.ok) return;
+    const m=(await r.text()).match(/APP_VERSION='([^']+)'/);
+    if(m&&m[1]!==APP_VERSION&&!running) location.replace(location.pathname+'?v='+encodeURIComponent(m[1]));
+  }catch(e){}
+}
+checkUpdate();
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible') checkUpdate();});
+
 /* ---------- init ---------- */
 renderHeader(); renderStrings(); sizeMeter();
 IDB.get().then(j=>{ try{ const b=j&&JSON.parse(j); if(!valid(b)) {save(); return;}
