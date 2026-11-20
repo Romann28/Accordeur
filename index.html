@@ -153,6 +153,7 @@ const NOTES_EN=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
 const NOTES_FR=['Do','Do♯','Ré','Ré♯','Mi','Fa','Fa♯','Sol','Sol♯','La','La♯','Si'];
 const PRESETS=[
   {id:'standard',name:'Standard',strings:[40,45,50,55,59,64]},
+  {id:'rainsong',name:'The Rain Song (DGCGCD)',strings:[38,43,48,55,60,62]},
   {id:'dropd',name:'Drop D',strings:[38,45,50,55,59,64]},
   {id:'halfdown',name:'½ ton plus bas',strings:[39,44,49,54,58,63]},
   {id:'fulldown',name:'1 ton plus bas',strings:[38,43,48,53,57,62]},
@@ -166,9 +167,22 @@ const PRESETS=[
 const MIN_M=28, MAX_M=76; // E1 .. E5
 const STORE='accordeur-v1';
 let S={tuningId:'standard',name:'Standard',strings:[40,45,50,55,59,64],a4:440,notation:'en',refSound:true,custom:[]};
-try{const s=JSON.parse(localStorage.getItem(STORE)||'null');
-  if(s&&Array.isArray(s.strings)&&s.strings.length===6) S=Object.assign(S,s);}catch(e){}
-const save=()=>{try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}};
+const valid=s=>s&&Array.isArray(s.strings)&&s.strings.length===6;
+function mergeCustom(list){ // adds tunings without losing existing ones
+  if(!Array.isArray(list)) return 0; let n=0;
+  for(const c of list){ if(!c||typeof c.name!=='string'||!Array.isArray(c.strings)||c.strings.length!==6) continue;
+    const st=c.strings.map(v=>Math.max(MIN_M,Math.min(MAX_M,Math.round(+v)||40)));
+    const ex=S.custom.find(x=>x.name===c.name); if(ex) ex.strings=st; else {S.custom.push({name:c.name.slice(0,30),strings:st}); n++;} }
+  return n;
+}
+try{const s=JSON.parse(localStorage.getItem(STORE)||'null'); if(valid(s)) S=Object.assign(S,s);}catch(e){}
+/* second copy in IndexedDB + ask the browser to keep storage permanently */
+const IDB={db:null,open(){return new Promise(r=>{try{const q=indexedDB.open('accordeur',1);
+  q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>{this.db=q.result;r(this.db)};q.onerror=()=>r(null);}catch(e){r(null)}})},
+  async get(){const db=this.db||await this.open(); if(!db) return null; return new Promise(r=>{try{const g=db.transaction('kv').objectStore('kv').get(STORE);g.onsuccess=()=>r(g.result||null);g.onerror=()=>r(null);}catch(e){r(null)}})},
+  async set(v){const db=this.db||await this.open(); if(!db) return; try{db.transaction('kv','readwrite').objectStore('kv').put(v,STORE);}catch(e){}}};
+const save=()=>{const j=JSON.stringify(S); try{localStorage.setItem(STORE,j)}catch(e){} IDB.set(j);};
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist();}catch(e){}
 
 const $=id=>document.getElementById(id);
 const noteName=m=>(S.notation==='fr'?NOTES_FR:NOTES_EN)[((m%12)+12)%12];
@@ -531,12 +545,28 @@ function settingsSheet(){
         <span class="seg" style="background:var(--surface)"><button data-n="en" class="${S.notation==='en'?'on':''}">E A D</button><button data-n="fr" class="${S.notation==='fr'?'on':''}">Mi La Ré</button></span></div>
       <div class="set"><span class="k">Son de référence<span>Joue la note quand tu touches une corde</span></span>
         <button class="toggle ${S.refSound?'on':''}" id="refT" aria-label="Son de référence"></button></div>
+      <div class="group-t">Sauvegarde de mes accordages</div>
+      <div class="row" style="margin-top:0"><button class="btn2" id="expB" style="flex:1">Copier le code de sauvegarde</button></div>
+      <div class="row"><input class="inp" id="impI" placeholder="Colle un code ici"><button class="btn" id="impB">Importer</button></div>
+      <div class="note-s">Tes accordages restent enregistrés sur ce téléphone. Attention : sur iPhone, Safari et l’icône sur l’écran d’accueil ont chacun leur propre mémoire. Pour passer de l’un à l’autre, copie le code ici et colle-le là-bas.</div>
       <div class="note-s">Astuce iPhone : dans Safari, bouton Partager › « Sur l’écran d’accueil » pour l’avoir comme une appli.</div>`;
       const setA4=v=>{S.a4=Math.max(415,Math.min(466,v)); save(); renderHeader(); resetTrack(); draw();};
       body.querySelector('#a4m').addEventListener('click',()=>setA4(S.a4-1));
       body.querySelector('#a4p').addEventListener('click',()=>setA4(S.a4+1));
       body.querySelectorAll('[data-n]').forEach(b=>b.addEventListener('click',()=>{S.notation=b.dataset.n; save(); renderHeader(); renderStrings(); if(mode==='manual'&&locked!==null) showTarget(locked); draw();}));
       body.querySelector('#refT').addEventListener('click',()=>{S.refSound=!S.refSound; save(); draw();});
+      body.querySelector('#expB').addEventListener('click',async()=>{
+        if(!S.custom.length){toast('Aucun accordage perso à sauvegarder');return;}
+        const code='ACC1:'+btoa(unescape(encodeURIComponent(JSON.stringify(S.custom))));
+        try{await navigator.clipboard.writeText(code); toast('Code copié ✓');}
+        catch(e){const i=body.querySelector('#impI'); i.value=code; i.select(); toast('Sélectionne et copie le code');}
+      });
+      body.querySelector('#impB').addEventListener('click',()=>{
+        const v=body.querySelector('#impI').value.trim();
+        try{ if(!v.startsWith('ACC1:')) throw 0; const n=mergeCustom(JSON.parse(decodeURIComponent(escape(atob(v.slice(5))))));
+          save(); renderHeader(); toast(n?`${n} accordage(s) importé(s) ✓`:'Accordages mis à jour ✓'); body.querySelector('#impI').value='';
+        }catch(e){toast('Code invalide');}
+      });
     };
     draw();
   });
@@ -547,6 +577,9 @@ $('settingsBtn').addEventListener('click',settingsSheet);
 
 /* ---------- init ---------- */
 renderHeader(); renderStrings(); sizeMeter();
+IDB.get().then(j=>{ try{ const b=j&&JSON.parse(j); if(!valid(b)) {save(); return;}
+  const added=mergeCustom(b.custom); if(added||!localStorage.getItem(STORE)){ if(!localStorage.getItem(STORE)) Object.assign(S,b,{custom:S.custom}); save(); renderHeader(); renderStrings(); } else save();
+}catch(e){} });
 })();
 </script>
 </body>
